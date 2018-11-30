@@ -30,39 +30,76 @@ func TestSumAll(t *testing.T) {
 	}
 }
 
-func TestSumAllTails(t *testing.T) {
-	slc1 := []int{1, 2, 3}
-	slc2 := []int{4, 5, 6}
-
-	got := SumAllTails(slc1, slc2)
-	want := []int{5, 11}
-
+func compareSlices(t *testing.T, got []int, want []int, slc1 []int, slc2 []int) {
+	t.Helper()
 	if !reflect.DeepEqual(got, want) {
-		t.Errorf("wanted '%v' got '%v' when summing tails of %v and %v", want, got, slc1, slc2)
+		t.Errorf("wanted '%v' got '%v' with: %v and %v", want, got, slc1, slc2)
 	}
+}
+
+func TestSumAllTails(t *testing.T) {
+	t.Run("Sum the tails of all slices", func(t *testing.T) {
+		slc1 := []int{1, 2, 3}
+		slc2 := []int{4, 5, 6}
+
+		got := SumAllTails(slc1, slc2)
+		want := []int{5, 11}
+
+		compareSlices(t, got, want, slc1, slc2)
+	})
+
+	t.Run("Safely sum tails of empty slices", func(t *testing.T) {
+		slc1 := []int{}
+		slc2 := []int{1}
+
+		got := SumAllTails(slc1, slc2)
+		want := []int{0, 0}
+
+		compareSlices(t, got, want, slc1, slc2)
+	})
 }
 
 func TestSumAllHeads(t *testing.T) {
-	slc1 := []int{1, 2, 3}
-	slc2 := []int{4, 5, 6}
+	t.Run("Sum the heads of all slices", func(t *testing.T) {
+		slc1 := []int{1, 2, 3}
+		slc2 := []int{4, 5, 6}
 
-	got := SumAllHeads(slc1, slc2)
-	want := []int{3, 9}
+		got := SumAllHeads(slc1, slc2)
+		want := []int{3, 9}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("wanted '%v' got '%v' when summing heads of %v and %v", want, got, slc1, slc2)
-	}
+		compareSlices(t, got, want, slc1, slc2)
+	})
+
+	t.Run("Safely sum heads of empty slices", func(t *testing.T) {
+		slc1 := []int{}
+		slc2 := []int{6}
+
+		got := SumAllHeads(slc1, slc2)
+		want := []int{0, 0}
+
+		compareSlices(t, got, want, slc1, slc2)
+	})
 }
 
 func TestSumAllIns(t *testing.T) {
-	slc1 := []int{1, 2, 3}
-	slc2 := []int{4, 5, 9, 6}
-	slc3 := []int{4, 5}
+	t.Run("Sum the heads of all slices", func(t *testing.T) {
+		slc1 := []int{1, 2, 3}
+		slc2 := []int{4, 5, 9, 6}
+		slc3 := []int{4, 5}
 
-	got := SumAllIns(slc1, slc2, slc3)
-	want := []int{2, 14, 0}
+		got := SumAllIns(slc1, slc2, slc3)
+		want := []int{2, 14, 0}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("wanted '%v' got '%v' when summing insides of %v, %v, and %v", want, got, slc1, slc2, slc3)
-	}
+		compareSlices(t, got, want, slc1, slc2)
+	})
+
+	t.Run("Safely sum heads of empty slices", func(t *testing.T) {
+		slc1 := []int{}
+		slc2 := []int{4}
+
+		got := SumAllIns(slc1, slc2)
+		want := []int{0, 0}
+
+		compareSlices(t, got, want, slc1, slc2)
+	})
 }

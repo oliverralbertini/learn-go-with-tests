@@ -16,24 +16,36 @@ func SumAll(numSlcs ...[]int) (sums []int) {
 
 func SumAllTails(numSlcs ...[]int) (sums []int) {
 	for _, slc := range numSlcs {
-		tail := slc[1:]
-		sums = append(sums, Sum(tail))
+		sum := 0
+		if len(slc) > 0 {
+			tail := slc[1:]
+			sum = Sum(tail)
+		}
+		sums = append(sums, sum)
 	}
 	return
 }
 
 func SumAllHeads(numSlcs ...[]int) (sums []int) {
 	for _, slc := range numSlcs {
-		head := slc[0 : len(slc)-1]
-		sums = append(sums, Sum(head))
+		sum := 0
+		if len(slc) > 0 {
+			head := slc[0 : len(slc)-1]
+			sum = Sum(head)
+		}
+		sums = append(sums, sum)
 	}
 	return
 }
 
 func SumAllIns(numSlcs ...[]int) (sums []int) {
 	for _, slc := range numSlcs {
-		head := slc[1 : len(slc)-1]
-		sums = append(sums, Sum(head))
+		sum := 0
+		if len(slc) > 2 {
+			head := slc[1 : len(slc)-1]
+			sum = Sum(head)
+		}
+		sums = append(sums, sum)
 	}
 	return
 }
