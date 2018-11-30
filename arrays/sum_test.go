@@ -5,12 +5,14 @@ import (
 )
 
 func TestSum(t *testing.T) {
-	arr := [5]int{1, 2, 3, 4, 5}
+	t.Run("when using an arbitrary sized collection", func(t *testing.T) {
+		arr := []int{1, 2, 3}
 
-	got := Sum(arr)
-	want := 15
+		got := Sum(arr)
+		want := 6
 
-	if got != want {
-		t.Errorf("wanted '%d' got '%d' when summing %v", want, got, arr)
-	}
+		if got != want {
+			t.Errorf("wanted '%d' got '%d' when summing %v", want, got, arr)
+		}
+	})
 }

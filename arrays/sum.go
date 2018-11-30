@@ -1,6 +1,6 @@
 package arrays
 
-func Sum(nums [5]int) (sum int) {
+func Sum(nums []int) (sum int) {
 	for _, val := range nums {
 		sum += val
 	}
