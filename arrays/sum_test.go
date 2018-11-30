@@ -30,7 +30,7 @@ func TestSumAll(t *testing.T) {
 	}
 }
 
-func compareSlices(t *testing.T, got []int, want []int, slc1 []int, slc2 []int) {
+func compareSlices(t *testing.T, got, want, slc1, slc2 []int) {
 	t.Helper()
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("wanted '%v' got '%v' with: %v and %v", want, got, slc1, slc2)
