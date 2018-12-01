@@ -13,3 +13,8 @@ func (d Dictionary) Search(search string) (string, error) {
 	}
 	return definition, nil
 }
+
+// Add doesn't need to be a pointer since maps are 'reference types'
+func (d Dictionary) Add(word, def string) {
+	d[word] = def
+}
