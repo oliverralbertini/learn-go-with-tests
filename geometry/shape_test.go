@@ -14,11 +14,22 @@ func compareFloats(t *testing.T, got, want float64) {
 }
 
 func TestPerimeter(t *testing.T) {
-	rect := Rectangle{1.0, 2.0}
-	got := Perimeter(rect)
-	want := 6.0
+	checkPerim := func(t *testing.T, shape Shape, want float64) {
+		got := shape.Perimeter()
+		compareFloats(t, got, want)
+	}
 
-	compareFloats(t, got, want)
+	t.Run("Rectangle perimeter", func(t *testing.T) {
+		rect := Rectangle{1.0, 2.0}
+
+		checkPerim(t, &rect, 6.0)
+	})
+
+	t.Run("Circle perimeter", func(t *testing.T) {
+		circ := Circle{0.5}
+
+		checkPerim(t, &circ, math.Pi)
+	})
 }
 
 func TestArea(t *testing.T) {
@@ -27,13 +38,13 @@ func TestArea(t *testing.T) {
 		compareFloats(t, got, want)
 	}
 
-	t.Run("Rectangle", func(t *testing.T) {
+	t.Run("Rectangle area", func(t *testing.T) {
 		rect := Rectangle{1.0, 2.0}
 
 		checkArea(t, &rect, 2.0)
 	})
 
-	t.Run("Circle", func(t *testing.T) {
+	t.Run("Circle area", func(t *testing.T) {
 		circ := Circle{1.0}
 
 		checkArea(t, &circ, math.Pi)
