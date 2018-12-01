@@ -16,21 +16,28 @@ func TestSearch(t *testing.T) {
 		_, err := dictionary.Search(key)
 		want := ErrNotFound
 
-		if err == nil {
-			t.Fatal("expected to get an error")
-		}
-
 		assertError(t, err, want, key)
 	})
 }
 
 func TestAdd(t *testing.T) {
-	dictionary := Dictionary{}
-	key := "test"
-	want := "this is just a test"
-	dictionary.Add(key, want)
+	t.Run("adding a new word", func(t *testing.T) {
+		dictionary := Dictionary{}
+		key := "test"
+		want := "this is just a test"
+		err := dictionary.Add(key, want)
 
-	assertDefinition(t, dictionary, want, key)
+		assertNoError(t, err)
+		assertDefinition(t, dictionary, want, key)
+	})
+
+	t.Run("adding an existing word", func(t *testing.T) {
+		dictionary := Dictionary{"test": ""}
+		key := "test"
+		err := dictionary.Add(key, "this is just a test")
+
+		assertError(t, err, ErrWordExists, key)
+	})
 }
 
 func assertDefinition(t *testing.T, dictionary Dictionary, want, word string) {
@@ -50,7 +57,19 @@ func assertDefinition(t *testing.T, dictionary Dictionary, want, word string) {
 func assertError(t *testing.T, got, want error, word string) {
 	t.Helper()
 
+	if got == nil {
+		t.Fatal("expected to get an error")
+	}
+
 	if got != want {
 		t.Errorf("got '%s' want '%s' given the word '%s'", got, want, word)
+	}
+}
+
+func assertNoError(t *testing.T, err error) {
+	t.Helper()
+
+	if err != nil {
+		t.Fatal("was not expecting an error:", err)
 	}
 }
